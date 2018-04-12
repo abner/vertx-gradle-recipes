@@ -1,0 +1,7 @@
+repositories {
+    mavenLocal()
+    maven { url "http://central.maven.org/maven2/" }
+    maven { url "http://maven.repository.redhat.com/techpreview/all" }
+    maven { url "http://dist.wso2.org/maven2//" }
+    maven { url "http://repo.maven.apache.org/maven2" }
+}

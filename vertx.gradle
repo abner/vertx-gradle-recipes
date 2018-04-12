@@ -1,0 +1,82 @@
+buildscript {
+    repositories {
+       maven {
+           url 'http://nexus.aic.serpro/repository/public/'
+       }
+        maven { url 'https://repo.spring.io/plugins-snapshot' }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.2'
+        classpath "gradle.plugin.com.github.mtatheonly:quasar-gradle-plugin:0.0.1"
+    }
+}
+
+
+def archiveName = "$project.name-$project.version-fat.jar"
+
+
+
+apply plugin: 'application'
+// ao usar apply from: deve se aplicar o plugin a partir do nome da Classe ao invés do id
+// REFERENCIA: http://mrhaki.blogspot.com.br/2015/10/gradle-goodness-apply-external-script.html
+apply plugin: com.github.jengelman.gradle.plugins.shadow.PluginShadowPlugin
+
+mainClassName = 'io.vertx.core.Launcher'
+ext.mainClassName = 'io.vertx.core.Launcher'
+
+apply plugin: 'java'
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+def watchForChange = 'src/**/*'
+def doOnChange = './gradlew classes'
+
+ run {
+    args = [
+            'run',
+            project.mainVerticleName,
+            "-Dvertx.logger-delegate-factory-class-name=io.vertx.core.logging.SLF4JLogDelegateFactory",
+            "-Dvertx.metrics.options.enabled=true",
+            "-Dvertx.metrics.options.registryName=$project.name-metrics",
+            "--redeploy=$watchForChange",
+            "--launcher-class=$mainClassName",
+            "--on-redeploy=$doOnChange"
+    ]
+}
+
+dependencies {
+    afterEvaluate {
+        compile group: 'io.vertx', name: 'vertx-web', version: "$project.ext.vertxVersion"
+        compile group: 'io.vertx', name: 'vertx-core', version: "$project.ext.vertxVersion"
+        compile group: 'io.vertx', name: 'vertx-dropwizard-metrics', version: "$project.ext.vertxVersion"
+        compile group: 'io.dropwizard.metrics', name: 'metrics-jvm', version: '3.1.0'
+
+        compile group: 'org.slf4j', name: 'slf4j-api', version:'1.7.25'
+        compile group: 'org.slf4j', name: 'slf4j-log4j12', version:'1.7.25'
+        compile group: 'io.prometheus', name: 'client', version: '0.0.10'
+        compile group: 'io.prometheus', name: 'simpleclient_vertx', version: '0.0.23'
+        compile group: 'io.prometheus', name: 'simpleclient_dropwizard', version: '0.0.23'
+
+    }
+}
+
+shadowJar {
+    afterEvaluate {
+        append 'META-INF/services/io.vertx.core.spi.VerticleFactory'
+        classifier = 'fat'
+        manifest {
+            attributes "Main-Verticle": project.mainVerticleName
+        }
+        mergeServiceFiles {
+            include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
+        }
+
+    }
+}
