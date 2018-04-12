@@ -34,9 +34,11 @@ apply from: 'https://github.com/abner/vertx-gradle-recipes/raw/master/vertx.grad
 
 * Testing [https://github.com/abner/vertx-gradle-recipes/raw/master/testing.gradle](https://github.com/abner/vertx-gradle-recipes/raw/master/testing.gradle)
 
- - Tests dependencies
- - Tests tradiotional convention: Suffix `Test` for Unitary, and `ITTest` for integration
- - Integration task builds the shadowJar, starts the server and wait for service before starts running the IT Tests
+   - Tests dependencies
+   
+   - Tests tradiotional convention: Suffix `Test` for Unitary, and `ITTest` for integration
+   
+   - Integration task builds the shadowJar, starts the server and wait for service before starts running the IT Tests
 
 ```bash
 ./gradlew itTest
