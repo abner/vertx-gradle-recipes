@@ -80,3 +80,41 @@ shadowJar {
 
     }
 }
+
+// VERT.X SERVICE PROXIES GENERATION
+def generateSrcPath = "$buildDir/generated-src"
+def generatedSrcDir = file("$buildDir/generated-src")
+sourceSets {
+    generated {
+        java.srcDir generateSrcPath
+    }
+    main {
+        java.srcDirs += generatedSrcDir
+        output.dir(builtBy: 'generateProxies', generateSrcPath)
+    }
+}
+
+
+task generateProxies(type: JavaCompile, group: 'build',
+        description: 'Generates the Vertx proxies') {
+    if (project.ext.generateVertxProxiesServices) {
+        source = sourceSets.main.java // input source set
+        classpath = configurations.compile //+ configurations.vertx // add processor module to classpath
+        // specify javac arguments
+        options.compilerArgs = [
+                "-proc:only",
+                "-processor", "io.vertx.codegen.CodeGenProcessor", // vertx processor here
+                "-AoutputDirectory=$generateSrcPath"
+        ]
+        // specify output of generated code
+        destinationDir = generatedSrcDir
+    }
+}
+
+compileJava {
+    dependsOn(generateProxies)
+    source += sourceSets.generated.java
+    options.compilerArgs = [
+            "-Acodetrans.output={$projectDir}/src/main"
+    ]
+}

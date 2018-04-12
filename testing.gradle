@@ -1,0 +1,60 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.ksoichiro:gradle-console-reporter:0.5.0'
+        classpath "gradle.plugin.com.github.psxpaul:gradle-execfork-plugin:0.1.7"
+    }
+}
+
+// Configuração da execução dos testes unitários
+test {
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+   filter {
+	includeTestsMatching "*Test"
+   }
+}
+
+// setup de todas as tasks do tipo Test para logar no console o resultado da execução dos testes
+tasks.withType(Test) {
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+} 
+/**
+ * Run integration tests
+ *
+ */
+task itTest(type: Test) {
+  filter {
+     includeTestsMatching "*TestIT"
+  }
+    testLogging {
+
+    }
+}
+
+task startServer(type: com.github.psxpaul.task.ExecFork) {
+    commandLine = 'java'
+    args = [ '-jar', "$projectDir/build/libs/$project.name-$project.version-fat.jar" ]
+    workingDir = "$projectDir/build/libs"
+    standardOutput = "$buildDir/server.log"
+    errorOutput = "$buildDir/daemon-error.log"
+    stopAfter = itTest
+    waitForPort = 8080
+    // waitForOutput = 'has started'
+    // environment = ['JAVA_HOME': "$buildDir/java", 'USER_HOME': "$buildDir/userhome"]
+}
+
+// antes de iniciar o servidor tem que se assegurar que o jar foi gerado
+startServer.dependsOn shadowJar
+
+
+// para iniciar os testes de Integração, o servidor deve estar em execução
+itTest.dependsOn startServer

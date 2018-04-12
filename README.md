@@ -17,3 +17,27 @@ ext.mainVerticleName = 'io.abner.vertxapp.MainVerticle'
 apply from: 'https://github.com/abner/vertx-gradle-recipes/raw/master/vertx.gradle'
 
 ```
+
+## AVAILABLE RECIPES:
+
+* Vert.x [https://github.com/abner/vertx-gradle-recipes/raw/master/vertx.gradle](https://github.com/abner/vertx-gradle-recipes/raw/master/vertx.gradle)
+
+  - ShadowJar packaging
+  - Run with Livereload
+  - Metrics with prometheus endpoint ready
+  - Service Proxy Generator if anotatted Service and package-info were in place
+
+* Vert.x Sync[https://github.com/abner/vertx-gradle-recipes/raw/master/vertx-sync.gradle](https://github.com/abner/vertx-gradle-recipes/raw/master/vertx-sync.gradle)
+
+  - Vertx-Sync Ready
+  - Instrument @Suspendable with Quasar AOT Instrumentation
+
+* Testing [https://github.com/abner/vertx-gradle-recipes/raw/master/testing.gradle](https://github.com/abner/vertx-gradle-recipes/raw/master/testing.gradle)
+
+ - Tests dependencies
+ - Tests tradiotional convention: Suffix `Test` for Unitary, and `ITTest` for integration
+ - Integration task builds the shadowJar, starts the server and wait for service before starts running the IT Tests
+
+```bash
+./gradlew itTest
+```

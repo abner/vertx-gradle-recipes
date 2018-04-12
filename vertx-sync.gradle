@@ -1,0 +1,38 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        jcenter()
+    }
+    dependencies {
+        classpath "gradle.plugin.com.github.mtatheonly:quasar-gradle-plugin:0.0.1"
+    }
+}
+
+apply plugin: com.github.mtatheonly.plugins.quasar.QuasarInstrumentationPlugin
+
+configurations {
+    quasar
+}
+
+def quasarVersion = '0.7.7'
+def quasarClassifier = ':jdk8'
+
+dependencies {
+    compile "co.paralleluniverse:quasar-core:${quasarVer}${classifier}"
+}
+
+ext.compileQuasarAOT = false
+
+afterEvaluate {
+    if (ext.compileQuasarAOT) {
+        quasarInstrumentor {
+            instrumentorVerbose = true
+            instrumentorCheck = true
+            instrumentorDebug = true
+        }
+        compileJava.finalizedBy(quasarInstrumentation)
+    }
+}
+
