@@ -25,11 +25,13 @@ public class MainVerticle extends AbstractVerticle {
 
     @Override
 	public void start(Future<Void> startFuture) throws Exception {
+        LOGGER.info("Starting MainVerticle...");
 		Router router = Router.router(vertx);
         router.get("/ready").handler(this::getReady);
         router.get("/version").handler(this::getVersion);
         vertx.createHttpServer().requestHandler(router::accept).listen(8080);
         startFuture.complete();
+        LOGGER.info("MainVerticle started!");
     }
 
     public void getReady(RoutingContext context) {
