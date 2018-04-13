@@ -1,8 +1,5 @@
 buildscript {
     repositories {
-       maven {
-           url 'http://nexus.aic.serpro/repository/public/'
-       }
         maven { url 'https://repo.spring.io/plugins-snapshot' }
         maven {
             url "https://plugins.gradle.org/m2/"
@@ -38,7 +35,7 @@ targetCompatibility = 1.8
 def watchForChange = 'src/**/*'
 def doOnChange = './gradlew classes'
 
- run {
+run {
     args = [
             'run',
             project.mainVerticleName,
@@ -56,10 +53,13 @@ dependencies {
         compile group: 'io.vertx', name: 'vertx-web', version: "$project.ext.vertxVersion"
         compile group: 'io.vertx', name: 'vertx-core', version: "$project.ext.vertxVersion"
         compile group: 'io.vertx', name: 'vertx-dropwizard-metrics', version: "$project.ext.vertxVersion"
+        compile group: 'io.vertx', name: 'vertx-service-proxy', version: "$project.ext.vertxVersion", classifier: 'processor'
+        compile group: 'io.vertx', name: 'vertx-codegen', version: "$project.ext.vertxVersion", classifier: 'processor'
+
         compile group: 'io.dropwizard.metrics', name: 'metrics-jvm', version: '3.1.0'
 
-        compile group: 'org.slf4j', name: 'slf4j-api', version:'1.7.25'
-        compile group: 'org.slf4j', name: 'slf4j-log4j12', version:'1.7.25'
+        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+        compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
         compile group: 'io.prometheus', name: 'client', version: '0.0.10'
         compile group: 'io.prometheus', name: 'simpleclient_vertx', version: '0.0.23'
         compile group: 'io.prometheus', name: 'simpleclient_dropwizard', version: '0.0.23'
@@ -84,6 +84,9 @@ shadowJar {
 // VERT.X SERVICE PROXIES GENERATION
 def generateSrcPath = "$buildDir/generated-src"
 def generatedSrcDir = file("$buildDir/generated-src")
+
+ext.generateVertxProxiesServices = false
+
 sourceSets {
     generated {
         java.srcDir generateSrcPath
@@ -97,17 +100,19 @@ sourceSets {
 
 task generateProxies(type: JavaCompile, group: 'build',
         description: 'Generates the Vertx proxies') {
-    if (project.ext.generateVertxProxiesServices) {
-        source = sourceSets.main.java // input source set
-        classpath = configurations.compile //+ configurations.vertx // add processor module to classpath
-        // specify javac arguments
-        options.compilerArgs = [
-                "-proc:only",
-                "-processor", "io.vertx.codegen.CodeGenProcessor", // vertx processor here
-                "-AoutputDirectory=$generateSrcPath"
-        ]
-        // specify output of generated code
-        destinationDir = generatedSrcDir
+    afterEvaluate {
+        if (project.ext.generateVertxProxiesServices) {
+            source = sourceSets.main.java // input source set
+            classpath = configurations.compile //+ configurations.vertx // add processor module to classpath
+            // specify javac arguments
+            options.compilerArgs = [
+                    "-proc:only",
+                    "-processor", "io.vertx.codegen.CodeGenProcessor", // vertx processor here
+                    "-AoutputDirectory=$generateSrcPath"
+            ]
+            // specify output of generated code
+            destinationDir = generatedSrcDir
+        }
     }
 }
 

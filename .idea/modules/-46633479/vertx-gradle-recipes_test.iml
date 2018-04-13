@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="vertx-gradle-recipes:test" external.linked.project.path="/opt/abner/git/serpro/dedat/vertx-reference-app/vertx-gradle-recipes" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="" external.system.module.type="sourceSet" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+    <output-test url="file:///opt/abner/git/serpro/dedat/vertx-reference-app/vertx-gradle-recipes/out/test/classes" />
+    <exclude-output />
+    <content url="file:///opt/abner/git/serpro/dedat/vertx-reference-app/vertx-gradle-recipes/src/test">
+      <sourceFolder url="file:///opt/abner/git/serpro/dedat/vertx-reference-app/vertx-gradle-recipes/src/test/java" isTestSource="true" />
+      <sourceFolder url="file:///opt/abner/git/serpro/dedat/vertx-reference-app/vertx-gradle-recipes/src/test/resources" type="java-test-resource" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="vertx-gradle-recipes_main" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file:///opt/abner/git/serpro/dedat/vertx-reference-app/vertx-gradle-recipes/build/generated-src" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="Gradle: io.vertx:vertx-web:3.5.1" level="project" />
+    <orderEntry type="library" name="Gradle: io.vertx:vertx-dropwizard-metrics:3.5.1" level="project" />
+    <orderEntry type="library" name="Gradle: io.vertx:vertx-service-proxy:processor:3.5.1" level="project" />
+    <orderEntry type="library" name="Gradle: io.vertx:vertx-auth-common:3.5.1" level="project" />
+    <orderEntry type="library" name="Gradle: io.vertx:vertx-core:3.5.1" level="project" />
+    <orderEntry type="library" name="Gradle: io.vertx:vertx-codegen:processor:3.5.1" level="project" />
+    <orderEntry type="library" name="Gradle: io.dropwizard.metrics:metrics-jvm:3.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-log4j12:1.7.25" level="project" />
+    <orderEntry type="library" name="Gradle: io.prometheus:simpleclient_dropwizard:0.0.23" level="project" />
+    <orderEntry type="library" name="Gradle: io.dropwizard.metrics:metrics-core:4.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
+    <orderEntry type="library" name="Gradle: io.prometheus:client:0.0.10" level="project" />
+    <orderEntry type="library" name="Gradle: io.prometheus:simpleclient_vertx:0.0.23" level="project" />
+    <orderEntry type="library" name="Gradle: io.vertx:vertx-bridge-common:3.5.1" level="project" />
+    <orderEntry type="library" name="Gradle: io.netty:netty-codec-http2:4.1.19.Final" level="project" />
+    <orderEntry type="library" name="Gradle: io.netty:netty-handler:4.1.19.Final" level="project" />
+    <orderEntry type="library" name="Gradle: io.netty:netty-handler-proxy:4.1.19.Final" level="project" />
+    <orderEntry type="library" name="Gradle: io.netty:netty-resolver-dns:4.1.19.Final" level="project" />
+    <orderEntry type="library" name="Gradle: io.netty:netty-codec-http:4.1.19.Final" level="project" />
+    <orderEntry type="library" name="Gradle: io.netty:netty-codec-socks:4.1.19.Final" level="project" />
+    <orderEntry type="library" name="Gradle: io.netty:netty-codec-dns:4.1.19.Final" level="project" />
+    <orderEntry type="library" name="Gradle: io.netty:netty-codec:4.1.19.Final" level="project" />
+    <orderEntry type="library" name="Gradle: io.netty:netty-transport:4.1.19.Final" level="project" />
+    <orderEntry type="library" name="Gradle: io.netty:netty-buffer:4.1.19.Final" level="project" />
+    <orderEntry type="library" name="Gradle: io.netty:netty-resolver:4.1.19.Final" level="project" />
+    <orderEntry type="library" name="Gradle: io.netty:netty-common:4.1.19.Final" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.9.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.9.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.mvel:mvel2:2.3.1.Final" level="project" />
+    <orderEntry type="library" name="Gradle: log4j:log4j:1.2.17" level="project" />
+    <orderEntry type="library" name="Gradle: io.prometheus.client:model:0.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.reflections:reflections:0.9.8" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.guava:guava:12.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.findbugs:jsr305:2.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: net.jcip:jcip-annotations:1.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.protobuf:protobuf-java:2.5.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.matttproud.quantile:quantile:0.0.3" level="project" />
+    <orderEntry type="library" name="Gradle: io.prometheus:simpleclient_common:0.0.23" level="project" />
+    <orderEntry type="library" name="Gradle: io.prometheus:simpleclient:0.0.23" level="project" />
+    <orderEntry type="library" name="Gradle: javassist:javassist:3.12.1.GA" level="project" />
+    <orderEntry type="library" name="Gradle: dom4j:dom4j:1.6.1" level="project" />
+    <orderEntry type="library" name="Gradle: xml-apis:xml-apis:1.0.b2" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.9.0" level="project" />
+  </component>
+  <component name="TestModuleProperties" production-module="vertx-gradle-recipes_main" />
+</module>

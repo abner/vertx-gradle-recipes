@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.matttproud.quantile:quantile:0.0.3">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/matttproud/quantile/quantile/0.0.3/quantile-0.0.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/matttproud/quantile/quantile/0.0.3/quantile-0.0.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
