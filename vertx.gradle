@@ -14,20 +14,18 @@ buildscript {
 }
 
 
-def archiveName = "$project.name-$project.version-fat.jar"
+def defaultArchiveName = "$project.name-$project.version-fat.jar"
 
+def archiveName = "${->project.ext.has('customArchiveName') ? project.ext.customArchiveName : defaultArchiveName }"
 
-
-apply plugin: 'application'
 // ao usar apply from: deve se aplicar o plugin a partir do nome da Classe ao invés do id
 // REFERENCIA: http://mrhaki.blogspot.com.br/2015/10/gradle-goodness-apply-external-script.html
-apply plugin: com.github.jengelman.gradle.plugins.shadow.PluginShadowPlugin
-
-mainClassName = 'io.vertx.core.Launcher'
-ext.mainClassName = 'io.vertx.core.Launcher'
+apply plugin: com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 
 apply plugin: 'java'
 
+apply plugin: 'application'
+mainClassName="${-> project.ext.has('vertxLauncher') ? project.ext.vertxLauncher :  'io.vertx.core.Launcher'}"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -73,6 +71,7 @@ shadowJar {
         classifier = 'fat'
         manifest {
             attributes "Main-Verticle": project.mainVerticleName
+            attributes "Main-Class": project.mainClassName
         }
         mergeServiceFiles {
             include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
