@@ -7,8 +7,6 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 
-import io.vertx.serviceproxy.ProxyHelper;
-import io.vertx.serviceproxy.ServiceBinder;
 import io.vertx.serviceproxy.ServiceProxyBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -47,7 +47,10 @@ apply from: 'https://github.com/abner/vertx-gradle-recipes/raw/master/vertx.grad
 
 # NOTES
 
-> We could not upgrade to gradle 4.7 or superior because of these issues: https://github.com/vert-x3/vertx-codegen/issues/181, https://github.com/vorburger/minecraft-storeys-maker/issues/53
+> We could not upgrade to gradle 4.7 or superior because of these issues: https://github.com/vert-x3/vertx-codegen/issues/181, https://github.com/vorburger/minecraft-storeys-maker/issues/53 e https://github.com/tbroyer/gradle-errorprone-plugin-v0.0.x/issues/70
 
 No Service Proxy is generated
 
+## Vertx 3.7
+
+- Router.errorHandler() for managing routing related errors - instead of ValidationFailureHandler and NotImplementedHandler
