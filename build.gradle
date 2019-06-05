@@ -2,7 +2,7 @@
 apply from: 'repositories.gradle'
 
 // define versão do Vert.x
-ext.vertxVersion = '3.5.1'
+ext.vertxVersion = '3.7.1'
 
 // definição do Vertx que será iniciado junto à aplicação
 ext.mainVerticleName = 'io.abner.vertxapp.MainVerticle'

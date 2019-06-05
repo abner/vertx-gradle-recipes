@@ -4,16 +4,16 @@ Useful Gradle Recipes to be used with Vertx Applications
 ## Usage:
 
 ```gradle
-// carrega arquivo que define os repositórios
+// load the repositories definitions file
 apply from: 'https://github.com/abner/vertx-gradle-recipes/raw/master/repositories.gradle'
 
-// define versão do Vert.x
-ext.vertxVersion = '3.5.1'
+// here you can choose another vertx version to use
+ext.vertxVersion = '3.7.1'
 
-// definição do Vertx que será iniciado junto à aplicação
+// verticle which will be started within your application
 ext.mainVerticleName = 'io.abner.vertxapp.MainVerticle'
 
-// carrega arquivo com definicões de tasks de empacotamento e execução da aplicação
+// load vertx dependencies and tasks
 apply from: 'https://github.com/abner/vertx-gradle-recipes/raw/master/vertx.gradle'
 
 ```
@@ -36,10 +36,18 @@ apply from: 'https://github.com/abner/vertx-gradle-recipes/raw/master/vertx.grad
 
    - Tests dependencies
    
-   - Tests tradiotional convention: Suffix `Test` for Unitary, and `ITTest` for integration
+   - Tests traditioonal convention: Suffix `Test` for Unitary, and `ITTest` for integration
    
    - Integration task builds the shadowJar, starts the server and wait for service before starts running the IT Tests
 
 ```bash
 ./gradlew itTest
 ```
+
+
+# NOTES
+
+> We could not upgrade to gradle 4.7 or superior because of these issues: https://github.com/vert-x3/vertx-codegen/issues/181, https://github.com/vorburger/minecraft-storeys-maker/issues/53
+
+No Service Proxy is generated
+

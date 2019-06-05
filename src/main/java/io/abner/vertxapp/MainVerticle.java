@@ -42,7 +42,14 @@ public class MainVerticle extends AbstractVerticle {
             router.get("/ready").handler(this::getReady);
             router.get("/version").handler(this::getVersion);
             router.post("/call-service").handler(this::callService);
-            vertx.createHttpServer().requestHandler(router::accept).listen(8080);
+            vertx.createHttpServer().requestHandler(router).listen(8080, "0.0.0.0", listenResult -> {
+                if (listenResult.succeeded()) {
+                    LOGGER.info("Servidor iniciado e escutando em http://0.0.0.0:8080/");
+                } else {
+                    LOGGER.error("Falha ao iniciar o servidor!", listenResult.cause());
+                    startFuture.fail(listenResult.cause());
+                }
+            });
 
 
             startFuture.complete();

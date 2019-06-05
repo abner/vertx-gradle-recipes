@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.2'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.2'
         classpath "gradle.plugin.com.github.mtatheonly:quasar-gradle-plugin:0.0.1"
     }
 }
@@ -51,8 +51,9 @@ dependencies {
         compile group: 'io.vertx', name: 'vertx-web', version: "$project.ext.vertxVersion"
         compile group: 'io.vertx', name: 'vertx-core', version: "$project.ext.vertxVersion"
         compile group: 'io.vertx', name: 'vertx-dropwizard-metrics', version: "$project.ext.vertxVersion"
-        compile group: 'io.vertx', name: 'vertx-service-proxy', version: "$project.ext.vertxVersion", classifier: 'processor'
-        compile group: 'io.vertx', name: 'vertx-codegen', version: "$project.ext.vertxVersion", classifier: 'processor'
+        
+        compile "io.vertx:vertx-service-proxy:$project.ext.vertxVersion:processor"
+        compileOnly "io.vertx:vertx-codegen:$project.ext.vertxVersion:processor"
 
         compile group: 'io.dropwizard.metrics', name: 'metrics-jvm', version: '3.1.0'
 
@@ -87,11 +88,10 @@ def generatedSrcDir = file("$buildDir/generated-src")
 ext.generateVertxProxiesServices = false
 
 sourceSets {
-    generated {
-        java.srcDir generateSrcPath
-    }
     main {
-        java.srcDirs += generatedSrcDir
+        java {
+            srcDirs += generatedSrcDir
+        }
         output.dir(builtBy: 'generateProxies', generateSrcPath)
     }
 }
@@ -99,26 +99,30 @@ sourceSets {
 
 task generateProxies(type: JavaCompile, group: 'build',
         description: 'Generates the Vertx proxies') {
-    afterEvaluate {
-        if (project.ext.generateVertxProxiesServices) {
+     afterEvaluate {
+         if (project.ext.generateVertxProxiesServices) {
             source = sourceSets.main.java // input source set
-            classpath = configurations.compile //+ configurations.vertx // add processor module to classpath
+            classpath = configurations.compile + configurations.compileOnly // add processor module to classpath
             // specify javac arguments
+            options.debugOptions.debugLevel = "source,lines,vars"
             options.compilerArgs = [
                     "-proc:only",
                     "-processor", "io.vertx.codegen.CodeGenProcessor", // vertx processor here
-                    "-AoutputDirectory=$generateSrcPath"
+                    "-Acodegen.output=$generateSrcPath"
             ]
+            options.annotationProcessorPath = configurations.compileOnly
             // specify output of generated code
             destinationDir = generatedSrcDir
         }
     }
 }
 
+
 compileJava {
+    targetCompatibility = 1.8
+    sourceCompatibility = 1.8
     dependsOn(generateProxies)
-    source += sourceSets.generated.java
-    options.compilerArgs = [
-            "-Acodetrans.output={$projectDir}/src/main"
-    ]
+    // options.compilerArgs = [
+    //         "-Acodegen.output={$projectDir}/src/main"
+    // ]
 }
